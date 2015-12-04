@@ -45,3 +45,4 @@ group :development do
 end
 
 gem 'countries', :require => 'countries/global'
+gem 'city-state'
