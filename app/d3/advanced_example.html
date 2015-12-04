@@ -1,0 +1,270 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Foundation | Welcome</title>
+<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+<link href='http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial;
+        font-size: 16px;
+      }
+      #map-container {
+        border-style: solid;
+        border-color: #ccc #ccc #999 #ccc;
+        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+        width: 100%;
+        height:100%;
+      }
+      .map_box{
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+      #actions {
+        list-style: none;
+        padding: 0;
+      }
+      #inline-actions {
+        padding-top: 10px;
+      }
+      .item {
+        margin-left: 20px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="data.json"></script>
+    <script src="markerclusterer.js"></script>
+    <script>
+      var script = '<script type="text/javascript" src="';
+      if (document.location.search.indexOf('compiled') !== -1) {
+        script += '_compiled';
+      }
+      script += '.js"><' + '/script>';
+      document.write(script);
+    </script>
+
+    <script>
+      var styles = [[{
+        url: '../images/people35.png',
+        height: 35,
+        width: 35,
+        anchor: [16, 0],
+        textColor: '#ff00ff',
+        textSize: 10
+      }, {
+        url: '../images/people45.png',
+        height: 45,
+        width: 45,
+        anchor: [24, 0],
+        textColor: '#ff0000',
+        textSize: 11
+      }, {
+        url: '../images/people55.png',
+        height: 55,
+        width: 55,
+        anchor: [32, 0],
+        textColor: '#ffffff',
+        textSize: 12
+      }], [{
+        url: '../images/conv30.png',
+        height: 27,
+        width: 30,
+        anchor: [3, 0],
+        textColor: '#ff00ff',
+        textSize: 10
+      }, {
+        url: '../images/conv40.png',
+        height: 36,
+        width: 40,
+        anchor: [6, 0],
+        textColor: '#ff0000',
+        textSize: 11
+      }, {
+        url: '../images/conv50.png',
+        width: 50,
+        height: 45,
+        anchor: [8, 0],
+        textSize: 12
+      }], [{
+        url: '../images/heart30.png',
+        height: 26,
+        width: 30,
+        anchor: [4, 0],
+        textColor: '#ff00ff',
+        textSize: 10
+      }, {
+        url: '../images/heart40.png',
+        height: 35,
+        width: 40,
+        anchor: [8, 0],
+        textColor: '#ff0000',
+        textSize: 11
+      }, {
+        url: '../images/heart50.png',
+        width: 50,
+        height: 44,
+        anchor: [12, 0],
+        textSize: 12
+      }], [{
+        url: '../images/pin.png',
+        height: 48,
+        width: 30,
+        anchor: [-18, 0],
+        textColor: '#ffffff',
+        textSize: 10,
+        iconAnchor: [15, 48]
+      }]];
+
+      var markerClusterer = null;
+      var map = null;
+      var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&' +
+          'chco=FFFFFF,008CFF,000000&ext=.png';
+
+      function refreshMap() {
+        if (markerClusterer) {
+          markerClusterer.clearMarkers();
+        }
+
+        var markers = [];
+
+        var markerImage = new google.maps.MarkerImage(imageUrl,
+          new google.maps.Size(24, 32));
+
+        for (var i = 0; i < 1000; ++i) {
+          var latLng = new google.maps.LatLng(data.photos[i].latitude,
+              data.photos[i].longitude)
+          var marker = new google.maps.Marker({
+            position: latLng,
+            draggable: true,
+            icon: markerImage
+          });
+          markers.push(marker);
+        }
+
+        var zoom = parseInt(document.getElementById('zoom').value, 10);
+        var size = parseInt(document.getElementById('size').value, 10);
+        var style = parseInt(document.getElementById('style').value, 10);
+        zoom = zoom === -1 ? null : zoom;
+        size = size === -1 ? null : size;
+        style = style === -1 ? null: style;
+
+        markerClusterer = new MarkerClusterer(map, markers, {
+          maxZoom: zoom,
+          gridSize: size,
+          styles: styles[style]
+        });
+      }
+
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: new google.maps.LatLng(39.91, 116.38),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var refresh = document.getElementById('refresh');
+        google.maps.event.addDomListener(refresh, 'click', refreshMap);
+
+        var clear = document.getElementById('clear');
+        google.maps.event.addDomListener(clear, 'click', clearClusters);
+
+        refreshMap();
+      }
+
+      function clearClusters(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        markerClusterer.clearMarkers();
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+<style>.slide-in-down.mui-enter,.slide-in-left.mui-enter,.slide-in-up.mui-enter,.slide-in-right.mui-enter,.slide-out-down.mui-leave,.slide-out-right.mui-leave,.slide-out-up.mui-leave,.slide-out-left.mui-leave,.fade-in.mui-enter,.fade-out.mui-leave,.hinge-in-from-top.mui-enter,.hinge-in-from-right.mui-enter,.hinge-in-from-bottom.mui-enter,.hinge-in-from-left.mui-enter,.hinge-in-from-middle-x.mui-enter,.hinge-in-from-middle-y.mui-enter,.hinge-out-from-top.mui-leave,.hinge-out-from-right.mui-leave,.hinge-out-from-bottom.mui-leave,.hinge-out-from-left.mui-leave,.hinge-out-from-middle-x.mui-leave,.hinge-out-from-middle-y.mui-leave,.scale-in-up.mui-enter,.scale-in-down.mui-enter,.scale-out-up.mui-leave,.scale-out-down.mui-leave,.spin-in.mui-enter,.spin-out.mui-leave,.spin-in-ccw.mui-enter,.spin-out-ccw.mui-leave{transition-duration:500ms;transition-timing-function:linear;}.slide-in-down.mui-enter{-webkit-transform:translateY(-100%);transform:translateY(-100%);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-in-down.mui-enter.mui-enter-active{-webkit-transform:translateY(0);transform:translateY(0);}.slide-in-left.mui-enter{-webkit-transform:translateX(-100%);transform:translateX(-100%);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-in-left.mui-enter.mui-enter-active{-webkit-transform:translateX(0);transform:translateX(0);}.slide-in-up.mui-enter{-webkit-transform:translateY(100%);transform:translateY(100%);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-in-up.mui-enter.mui-enter-active{-webkit-transform:translateY(0);transform:translateY(0);}.slide-in-right.mui-enter{-webkit-transform:translateX(100%);transform:translateX(100%);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-in-right.mui-enter.mui-enter-active{-webkit-transform:translateX(0);transform:translateX(0);}.slide-out-down.mui-leave{-webkit-transform:translateY(0);transform:translateY(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-out-down.mui-leave.mui-leave-active{-webkit-transform:translateY(-100%);transform:translateY(-100%);}.slide-out-right.mui-leave{-webkit-transform:translateX(0);transform:translateX(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-out-right.mui-leave.mui-leave-active{-webkit-transform:translateX(100%);transform:translateX(100%);}.slide-out-up.mui-leave{-webkit-transform:translateY(0);transform:translateY(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-out-up.mui-leave.mui-leave-active{-webkit-transform:translateY(-100%);transform:translateY(-100%);}.slide-out-left.mui-leave{-webkit-transform:translateX(0);transform:translateX(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden;}.slide-out-left.mui-leave.mui-leave-active{-webkit-transform:translateX(-100%);transform:translateX(-100%);}.fade-in.mui-enter{opacity:0;transition-property:opacity;}.fade-in.mui-enter.mui-enter-active{opacity:1;}.fade-out.mui-leave{opacity:1;transition-property:opacity;}.fade-out.mui-leave.mui-leave-active{opacity:0;}.hinge-in-from-top.mui-enter{-webkit-transform:perspective(2000px) rotateX(-90deg);transform:perspective(2000px) rotateX(-90deg);-webkit-transform-origin:top;transform-origin:top;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-top.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-in-from-right.mui-enter{-webkit-transform:perspective(2000px) rotateY(-90deg);transform:perspective(2000px) rotateY(-90deg);-webkit-transform-origin:right;transform-origin:right;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-right.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-in-from-bottom.mui-enter{-webkit-transform:perspective(2000px) rotateX(90deg);transform:perspective(2000px) rotateX(90deg);-webkit-transform-origin:bottom;transform-origin:bottom;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-bottom.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-in-from-left.mui-enter{-webkit-transform:perspective(2000px) rotateY(90deg);transform:perspective(2000px) rotateY(90deg);-webkit-transform-origin:left;transform-origin:left;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-left.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-in-from-middle-x.mui-enter{-webkit-transform:perspective(2000px) rotateX(-90deg);transform:perspective(2000px) rotateX(-90deg);-webkit-transform-origin:center;transform-origin:center;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-middle-x.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-in-from-middle-y.mui-enter{-webkit-transform:perspective(2000px) rotateY(-90deg);transform:perspective(2000px) rotateY(-90deg);-webkit-transform-origin:center;transform-origin:center;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.hinge-in-from-middle-y.mui-enter.mui-enter-active{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);opacity:1;}.hinge-out-from-top.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:top;transform-origin:top;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-top.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateX(-90deg);transform:perspective(2000px) rotateX(-90deg);opacity:0;}.hinge-out-from-right.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:right;transform-origin:right;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-right.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateY(-90deg);transform:perspective(2000px) rotateY(-90deg);opacity:0;}.hinge-out-from-bottom.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:bottom;transform-origin:bottom;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-bottom.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateX(90deg);transform:perspective(2000px) rotateX(90deg);opacity:0;}.hinge-out-from-left.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:left;transform-origin:left;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-left.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateY(90deg);transform:perspective(2000px) rotateY(90deg);opacity:0;}.hinge-out-from-middle-x.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:center;transform-origin:center;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-middle-x.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateX(-90deg);transform:perspective(2000px) rotateX(-90deg);opacity:0;}.hinge-out-from-middle-y.mui-leave{-webkit-transform:perspective(2000px) rotate(0deg);transform:perspective(2000px) rotate(0deg);-webkit-transform-origin:center;transform-origin:center;transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.hinge-out-from-middle-y.mui-leave.mui-leave-active{-webkit-transform:perspective(2000px) rotateY(-90deg);transform:perspective(2000px) rotateY(-90deg);opacity:0;}.scale-in-up.mui-enter{-webkit-transform:scale(0.5);transform:scale(0.5);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.scale-in-up.mui-enter.mui-enter-active{-webkit-transform:scale(1);transform:scale(1);opacity:1;}.scale-in-down.mui-enter{-webkit-transform:scale(1.5);transform:scale(1.5);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.scale-in-down.mui-enter.mui-enter-active{-webkit-transform:scale(1);transform:scale(1);opacity:1;}.scale-out-up.mui-leave{-webkit-transform:scale(1);transform:scale(1);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.scale-out-up.mui-leave.mui-leave-active{-webkit-transform:scale(1.5);transform:scale(1.5);opacity:0;}.scale-out-down.mui-leave{-webkit-transform:scale(1);transform:scale(1);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.scale-out-down.mui-leave.mui-leave-active{-webkit-transform:scale(0.5);transform:scale(0.5);opacity:0;}.spin-in.mui-enter{-webkit-transform:rotate(-0.75turn);transform:rotate(-0.75turn);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.spin-in.mui-enter.mui-enter-active{-webkit-transform:rotate(0);transform:rotate(0);opacity:1;}.spin-out.mui-leave{-webkit-transform:rotate(0);transform:rotate(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.spin-out.mui-leave.mui-leave-active{-webkit-transform:rotate(0.75turn);transform:rotate(0.75turn);opacity:0;}.spin-in-ccw.mui-enter{-webkit-transform:rotate(0.75turn);transform:rotate(0.75turn);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:0;}.spin-in-ccw.mui-enter.mui-enter-active{-webkit-transform:rotate(0);transform:rotate(0);opacity:1;}.spin-out-ccw.mui-leave{-webkit-transform:rotate(0);transform:rotate(0);transition-property:-webkit-transform,opacity;transition-property:transform,opacity;opacity:1;}.spin-out-ccw.mui-leave.mui-leave-active{-webkit-transform:rotate(-0.75turn);transform:rotate(-0.75turn);opacity:0;}.slow{transition-duration:750ms!important;}.fast{transition-duration:250ms!important;}.linear{transition-timing-function:linear!important;}.ease{transition-timing-function:ease!important;}.ease-in{transition-timing-function:ease-in!important;}.ease-out{transition-timing-function:ease-out!important;}.ease-in-out{transition-timing-function:ease-in-out!important;}.bounce-in{transition-timing-function:cubic-bezier(0.485,0.155,0.24,1.245)!important;}.bounce-out{transition-timing-function:cubic-bezier(0.485,0.155,0.515,0.845)!important;}.bounce-in-out{transition-timing-function:cubic-bezier(0.76,-0.245,0.24,1.245)!important;}.short-delay{transition-delay:300ms!important;}.long-delay{transition-delay:700ms!important;}.shake{-webkit-animation-name:shake-7;animation-name:shake-7;}@-webkit-keyframes shake-7{0%,10%,20%,30%,40%,50%,60%,70%,80%,90%{-webkit-transform:translateX(7%);transform:translateX(7%);}5%,15%,25%,35%,45%,55%,65%,75%,85%,95%{-webkit-transform:translateX(-7%);transform:translateX(-7%);}}@keyframes shake-7{0%,10%,20%,30%,40%,50%,60%,70%,80%,90%{-webkit-transform:translateX(7%);transform:translateX(7%);}5%,15%,25%,35%,45%,55%,65%,75%,85%,95%{-webkit-transform:translateX(-7%);transform:translateX(-7%);}}.spin-cw{-webkit-animation-name:spin-cw-1turn;animation-name:spin-cw-1turn;}@-webkit-keyframes spin-cw-1turn{0%{-webkit-transform:rotate(-1turn);transform:rotate(-1turn);}100%{-webkit-transform:rotate(0);transform:rotate(0);}}@keyframes spin-cw-1turn{0%{-webkit-transform:rotate(-1turn);transform:rotate(-1turn);}100%{-webkit-transform:rotate(0);transform:rotate(0);}}.spin-ccw{-webkit-animation-name:spin-cw-1turn;animation-name:spin-cw-1turn;}@keyframes spin-cw-1turn{0%{-webkit-transform:rotate(0);transform:rotate(0);}100%{-webkit-transform:rotate(1turn);transform:rotate(1turn);}}.wiggle{-webkit-animation-name:wiggle-7deg;animation-name:wiggle-7deg;}@-webkit-keyframes wiggle-7deg{40%,50%,60%{-webkit-transform:rotate(7deg);transform:rotate(7deg);}35%,45%,55%,65%{-webkit-transform:rotate(-7deg);transform:rotate(-7deg);}0%,30%,70%,100%{-webkit-transform:rotate(0);transform:rotate(0);}}@keyframes wiggle-7deg{40%,50%,60%{-webkit-transform:rotate(7deg);transform:rotate(7deg);}35%,45%,55%,65%{-webkit-transform:rotate(-7deg);transform:rotate(-7deg);}0%,30%,70%,100%{-webkit-transform:rotate(0);transform:rotate(0);}}.infinite{-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;}.slow{-webkit-animation-duration:750ms!important;animation-duration:750ms!important;}.fast{-webkit-animation-duration:250ms!important;animation-duration:250ms!important;}.linear{-webkit-animation-timing-function:linear!important;animation-timing-function:linear!important;}.ease{-webkit-animation-timing-function:ease!important;animation-timing-function:ease!important;}.ease-in{-webkit-animation-timing-function:ease-in!important;animation-timing-function:ease-in!important;}.ease-out{-webkit-animation-timing-function:ease-out!important;animation-timing-function:ease-out!important;}.ease-in-out{-webkit-animation-timing-function:ease-in-out!important;animation-timing-function:ease-in-out!important;}.bounce-in{-webkit-animation-timing-function:cubic-bezier(0.485,0.155,0.24,1.245)!important;animation-timing-function:cubic-bezier(0.485,0.155,0.24,1.245)!important;}.bounce-out{-webkit-animation-timing-function:cubic-bezier(0.485,0.155,0.515,0.845)!important;animation-timing-function:cubic-bezier(0.485,0.155,0.515,0.845)!important;}.bounce-in-out{-webkit-animation-timing-function:cubic-bezier(0.76,-0.245,0.24,1.245)!important;animation-timing-function:cubic-bezier(0.76,-0.245,0.24,1.245)!important;}.short-delay{-webkit-animation-delay:300ms!important;animation-delay:300ms!important;}.long-delay{-webkit-animation-delay:700ms!important;animation-delay:700ms!important;}</style>
+
+<div class="top-bar">
+<div class="top-bar-left">
+<ul class="menu">
+<li class="menu-text">Marketing Site</li>
+<li><a href="#">One</a></li>
+<li><a href="#">Two</a></li>
+</ul>
+</div>
+<div class="top-bar-right">
+<ul class="menu">
+<li><a href="#">Three</a></li>
+<li><a href="#">Four</a></li>
+<li><a href="#">Five</a></li>
+<li><a href="#">Six</a></li>
+</ul>
+</div>
+</div>
+
+
+<div class="map_box">
+<div id="map-container">
+  <div id="map"></div>
+</div>
+</div>
+
+
+
+<div id="inline-actions">
+  <span>Max zoom level:
+    <select id="zoom">
+      <option value="-1">Default</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+    </select>
+
+  </span>
+  <span class="item">Cluster size:
+    <select id="size">
+      <option value="-1">Default</option>
+      <option value="40">40</option>
+      <option value="50">50</option>
+      <option value="70">70</option>
+      <option value="80">80</option>
+    </select>
+  </span>
+  <span class="item">Cluster style:
+    <select id="style">
+      <option value="-1">Default</option>
+      <option value="0">People</option>
+      <option value="1">Conversation</option>
+      <option value="2">Heart</option>
+      <option value="3">Pin</option>
+   </select>
+   <input id="refresh" type="button" value="Refresh Map" class="item"/>
+   <a href="#" id="clear">Clear</a>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+      $(document).foundation();
+    </script>
+</body>
+</html>
