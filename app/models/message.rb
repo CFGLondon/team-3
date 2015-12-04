@@ -63,7 +63,7 @@ class Message < ActiveRecord::Base
       l.city = location.join(" ")
     end
     l.save
-    m = new content: text, location_id: l.id, category_id: c.id, person_id: p.id
+    m = new content: text, location_id: l.id, category_id: c.id, person_id: p.id, issue: issue
     m.save
   end
 
