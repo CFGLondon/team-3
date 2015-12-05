@@ -930,6 +930,21 @@
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
           <li><%= link_to "Data", "/api/messages"  %></li>
+
+              <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/">All</a></li>
+                  <% Category.all.each do |c| %>
+                    <li><a href="/?category_id=<%= c.id %>"><%= c.keyword %></a></li>
+                  <% end %>
+                </ul>
+              </li>
+
+          <% if @category_id.present? %>
+            <li><a href="#"><%= Category.find(@category_id).keyword %></a></li>
+          <% end %>
+
         </ul>
       </div>
     </div>

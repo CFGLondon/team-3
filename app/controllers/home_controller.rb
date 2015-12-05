@@ -2,7 +2,12 @@ class HomeController < ApplicationController
   layout "api"
 
   def index
-    @messages = Message.all
+    @category_id = params[:category_id]
+    if @category_id.present?
+      @messages = Message.where("category_id = ?", @category_id)
+    else
+      @messages = Message.all
+    end
     @ret = {count: @messages.count, photos: []} 
     @messages.each do |m| 
       @ret[:photos] << {
