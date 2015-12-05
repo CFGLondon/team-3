@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :messages do
       collection do
         get :twilio
+        get :zichen_csv
       end
     end
   end
