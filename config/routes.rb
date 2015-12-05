@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :messages do
       collection do
-        post :twilio
+        get :twilio
       end
     end
   end
