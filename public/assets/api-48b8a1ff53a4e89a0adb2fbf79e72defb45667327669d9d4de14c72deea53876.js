@@ -60,6 +60,7 @@
  * @constructor
  * @extends google.maps.OverlayView
  */
+
 function MarkerClusterer(map, opt_markers, opt_options) {
   // MarkerClusterer implements google.maps.OverlayView interface. We use the
   // extend function to extend MarkerClusterer with google.maps.OverlayView
@@ -1302,3 +1303,16 @@ Cluster.prototype['getMarkers'] = Cluster.prototype.getMarkers;
 ClusterIcon.prototype['onAdd'] = ClusterIcon.prototype.onAdd;
 ClusterIcon.prototype['draw'] = ClusterIcon.prototype.draw;
 ClusterIcon.prototype['onRemove'] = ClusterIcon.prototype.onRemove;
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+
