@@ -4,7 +4,7 @@ impairments = ["Visual", "Hearing", "Disabled"]
 locations   = ["United Kingdom", "GB", "London, GB", "Bangladesh", "Sudan", "Cambodia", "Uganda", "Tanzania"]
 
 # WHO Syed Laiq Hussain Jafri WHERE London, GB WHAT Visually Impaired CAT Education
-10.times do |x|
+100.times do |x|
   who   = whos[rand(5)]
   where = locations[rand(8)]
   cat   = categories[rand(6)]
