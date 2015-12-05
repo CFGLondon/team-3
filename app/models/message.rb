@@ -20,16 +20,16 @@ class Message < ActiveRecord::Base
       category = $1.to_s.strip
     end
 
-    if message =~ /PHONE(.+?)(WHAT|WHEN|WHERE|WHO|CAT|EMAIL|DOB|$)/
-      phone = $1.to_s.strip
-    end
-
     if message =~ /EMAIL(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|CAT|DOB|$)/
       email = $1.to_s.strip
     end
 
     if message =~ /DOB(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|CAT|EMAIL|$)/
       dob = $1.to_s.strip
+    end
+
+    if message =~ /PHONE(.+?)(WHAT|WHEN|WHERE|WHO|CAT|EMAIL|DOB|$)/
+      phone = $1.to_s.strip
     end
 
     category = 'Unknown' if category.blank?
