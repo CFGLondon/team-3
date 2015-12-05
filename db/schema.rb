@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204193531) do
+ActiveRecord::Schema.define(version: 20151204232352) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "keyword",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "country",    limit: 255
+    t.string   "city",       limit: 255
+    t.decimal  "lat",                    precision: 17, scale: 14, null: false
+    t.decimal  "lng",                    precision: 17, scale: 14, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "locations", ["city"], name: "index_locations_on_city", using: :btree
+  add_index "locations", ["country"], name: "index_locations_on_country", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.text     "content",     limit: 65535
@@ -20,6 +38,17 @@ ActiveRecord::Schema.define(version: 20151204193531) do
     t.integer  "person_id",   limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.text     "issue",       limit: 65535
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string   "first_name", limit: 255
+    t.string   "last_name",  limit: 255
+    t.date     "dob"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "email",      limit: 255
+    t.string   "phone",      limit: 255
   end
 
 end
