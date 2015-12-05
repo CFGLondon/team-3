@@ -79,3 +79,4 @@ class Message < ActiveRecord::Base
     Category.destroy_all
   end
 end
+
