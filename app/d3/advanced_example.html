@@ -162,7 +162,8 @@
                     new google.maps.Size(64, 32));
 
 
-            var c = getNameFromJson();
+            var c = "Incident 22";
+//            var c = getNameFromJson();
 //            var c = "dugaa";
             var infowindow = new google.maps.InfoWindow({
                 content: c
@@ -174,7 +175,7 @@
                         data.photos[i].longitude);
                 var marker = new google.maps.Marker({
                     position: latLng,
-                    draggable: true,
+                    draggable: false,
                     title: "yer maw",
                     icon: markerImage,
                     zoom: 15
