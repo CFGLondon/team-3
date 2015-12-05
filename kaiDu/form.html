@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ADD International</title>
+<link rel="stylesheet" type="text/css" href="style.css?q=2"/>
+<link href="images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="utils.js"></script>
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+<body>
+
+
+
+
+
+<div class="header">
+				
+		<a href="index.php"><img src="images/logo.png" class="logo" /></a><br />
+		
+		<span class="quote"><i>Please complete the form below.</i></span></div> <!-- header -->
+
+<!--<div class="nav">
+	<a href="index" class="nav-link nav-link-active"><div class="nav-item hvr-hang"><span>Home</span></div></a><a href="add_kid" class="nav-link"><div class="nav-item hvr-hang"><span>Add Kid</span></div></a><a href="kids" class="nav-link"><div class="nav-item hvr-hang"><span>Kids</span></div></a>	
+</div>-->
+
+
+
+<div class="message">
+The following errors have occurred:
+<ol>
+<li>No username entered.</li>
+<li>Etc etc etc.</li>
+</ol>
+</div>
+
+
+
+<div class="content">
+<form method="POST">
+<input type="text" name="username" placeholder="First Name" class="text" />
+<br /><br />
+<input type="password" name="password" placeholder="Last Name" class="text" />
+<br /><br />
+
+
+<textarea class="text" name="content" rows="15" class="text" placeholder="Describe your issue here...">
+</textarea>
+<br /><br />
+<select class='text' name="category">
+<option value="" disabled selected>Category</option>
+<option value="blind">Blind</option>
+<option value="deaf">Deaf</option>
+</select>
+<br /><br />
+<div class="center">
+<input type="submit" value="Submit" name="Submit" class="btn" />
+
+<br /><br />
+</div> <!--center-->
+</form>
+</div> <!-- content -->
+
+<div class="content">&copy; 2015</div>
+</body>
