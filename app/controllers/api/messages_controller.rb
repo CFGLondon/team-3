@@ -8,7 +8,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def twilio
-    message = params[:Body] + " PHONE " + params[:From]
+    message = params[:Body] + " PHONE " + params[:From] + " WHERE " + params[:FromCountry]
     if Message.parse message
       return(render json: { status: true })
     else
