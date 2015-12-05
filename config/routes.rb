@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       collection do
         get :twilio
         get :zichen_csv
+        get :map_data
       end
     end
   end
