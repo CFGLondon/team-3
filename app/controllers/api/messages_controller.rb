@@ -8,7 +8,11 @@ class Api::MessagesController < ApplicationController
   end
 
   def twilio
-    Message.create content: params, category_id: 10
-    return(render json:{status: 1})
+    message = params[:Body] + " PHONE " + params[:From]
+    if Message.parse message
+      return(render json: { status: true })
+    else
+      return(render json: { status: false })
+    end
   end
 end
