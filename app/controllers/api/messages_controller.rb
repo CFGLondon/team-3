@@ -1,4 +1,8 @@
 class Api::MessagesController < ApplicationController
+  def index
+    @messages = Message.paginate(:per_page => 20, :page => params[:page]).order('created_at desc')
+  end
+
   def new
     if Message.parse(params[:message])
       return(render json: { status: true })

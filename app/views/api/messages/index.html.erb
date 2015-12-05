@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>WHO</th>
+      <th>WHAT</th>
+      <th>WHEN</th>
+      <th>Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @messages.each do |m| %>
+      <tr>
+        <td><%= m.category.keyword %></td>
+        <td><%= [m.person.first_name.to_s, m.person.last_name.to_s].join(" ") %></td>
+        <td><%= m.issue %></td>
+        <td><%= m.created_at.strftime("%d-%m-%Y") %></td>
+        <td><%= m.person.phone %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
