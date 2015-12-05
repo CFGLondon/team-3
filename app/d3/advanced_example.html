@@ -139,11 +139,11 @@
 
 
 var c = "dugaa";
-
+var infowindow = new google.maps.InfoWindow({
+    content: c
+  });
         for (var i = 0; i < 1000; ++i) {
-          var infowindow = new google.maps.InfoWindow({
-              content: c
-            });
+
 
 
           var latLng = new google.maps.LatLng(data.photos[i].latitude,
@@ -157,6 +157,7 @@ var c = "dugaa";
           });
           marker.addListener('click', function() {
     infowindow.open(map, marker);
+
   });
           markers.push(marker);
         }
