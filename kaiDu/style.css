@@ -1,0 +1,220 @@
+/*
+File: style.css
+CSS of this file is coded by: Kai Du (alanduu50@gmail.com)
+*/
+
+* { margin: 0; padding: 0; border: none; }
+
+@media only screen and (max-width: 520px) {
+	.logo {
+		width: 90%;
+	}
+}
+.small {
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 750px) {
+  #header-left-icon {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 485px) {
+	.kid-graph {
+		width: 95%;
+	}
+}
+.social-icons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+}
+.social-icon {
+  border: 0;
+  outline: none;
+}
+.social-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.7;
+}
+body {
+  z-index: 1;
+  position: relative;
+  background-image: url("images/bg.png");
+  background-color: #002b26;
+  color: #FFF;
+  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+}
+.line {
+	position: absolute;
+	width: 100%;
+	height: 10px;
+	left: 0;
+	right: 0;
+	bottom: 0px;
+	margin: auto;
+}
+.header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.in-header {
+  position: relative;
+  text-align: center;
+  height: 105px;
+  overflow: auto;
+  margin-bottom: 15px;
+  background-color: #000;
+}
+.in-header-title {
+  text-align: left;
+  margin: 20px 5% 0 5%;
+  font-size: 40px;
+}
+#in-nav {
+  cursor: pointer;
+  float: right;
+  height: 75px;
+  padding: 10px;
+}
+#header-left-icon {
+  height: 75px;
+  padding: 10px 40px 10px 40px;
+  float: left;
+}
+#in-nav:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
+}
+.clear {
+  clear: both;
+}
+
+.bold {
+  font-weight: bold;
+}
+.text {
+  box-sizing : border-box;
+  width: 100%;
+  border: 3px solid #6BC1CD;
+  font-size: 20px;
+  font-family: MS Shell Dlg \32;
+  padding: 10px 9% 10px 1%;
+}
+select.text {
+  width: 100%;
+}
+
+/*
+#dd { width: 90px; }
+#m { margin-left: 20px; width: 140px; }
+#y { margin-left: 20px; width: 90px; }
+*/
+.content {
+  font-size: 24px;
+  overflow: auto;
+  background-image: url("images/bg_trans.png");
+  padding: 20px 5% 20px 5%;
+  margin: 0 0% 1% 0;
+}
+.content-inner {
+
+}
+.title {
+  background-image: url("images/bg_90.png");
+  padding: 20px 5% 20px 5%;
+  margin: 0;
+  font-size: 30px;
+}
+.nav {
+  text-align: center;
+}
+.index-btn {
+  width: 200px;
+}
+.center {
+  text-align: center;
+}
+.message {
+  font-size: 24px;
+  background-image: url("images/white_trans.png");
+  padding: 20px 70px 20px 70px;
+  margin: 0 0% 2% 0;
+}
+.btn {
+  -webkit-appearance: none;
+  width: 200px;
+  background-color: #000;
+  color: #FFF;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+}
+.btn-long {
+  width: 340px;
+}
+
+@media only screen and (min-device-width: 480px) {
+  .btn:hover {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+.drop-container {
+  margin-top: -15px;
+  z-index: 10000;
+  display: none;
+  background-color: #FFF;
+  width: 300px;
+  position: absolute;
+  right: 0;
+  padding-bottom: 15px;
+}
+.drop {
+  padding: 15px 15px 0 15px;
+  overflow: auto;
+}
+.drop-right {
+  font-size: 40px;
+  float: right;
+  background-color: #000;
+  padding: 20px 40px 20px 40px;
+}
+a {
+	cursor: pointer;
+	text-decoration: none;
+	color: white;
+}
+a:hover {
+	color: #DF0101;
+}
+.kid-graph {
+  /*width: 50%;*/
+}
+.wt {
+  z-index: -1;
+  position: fixed;
+}
+@media only screen and (max-width: 485px) {
+	.wt {
+		width: 200px;
+	}
+}
+
+table.rank {
+  width: 100%;
+}
+table.rank th {
+  background-image: url("images/bg_70.png");
+  font-size: 25px;
+  padding: 20px;
+}
+
+table.rank td {
+  background-image: url("images/bg_trans.png");
+  font-size: 25px;
+  padding: 20px;
+  
+}
