@@ -2,6 +2,7 @@ class Message < ActiveRecord::Base
   belongs_to :category
   belongs_to :person
   belongs_to :location
+  after_create :publish
   def self.parse text
     message = text.gsub("\n", " ")
     if message =~ /WHERE(.+?)(WHAT|WHEN|WHO|CAT|PHONE|EMAIL|DOB|$)/
@@ -77,6 +78,47 @@ class Message < ActiveRecord::Base
     Person.destroy_all
     Location.destroy_all
     Category.destroy_all
+  end
+
+  def publish
+    m = self
+    data = {
+      photo_id: m.id,
+      photo_title: m.person.name,
+      photo_url: "http://www.panoramio.com/photo/27932",
+      photo_file_url: "http://www.panoramio.com/photo/27932",
+      latitude: m.location.lat,
+      longitude: m.location.lng,
+      width: 500,
+      height: 350,
+      upload_date: m.person.dob.to_s,
+      owner_name: m.person.name,
+      owner_id: m.id,
+      owner_url: "http://www.panoramio.com/photo/27932",
+      content: m.content,
+      phone: m.person.phone
+    }
+    $redis.publish 'chat_event', data.to_json
+  end
+
+  def self.dummy_create
+    categories  = ["Education", "Health", "Poverty", "Food", "Unemployment", "Exclusion"]
+    whos        = ["Alan", "Youri", "Zichen", "Laiq", "Danny"]
+    impairments = ["Visual", "Hearing", "Disabled"]
+    locations   = ["United Kingdom", "GB", "London, GB", "Bangladesh", "Sudan", "Cambodia", "Uganda", "Tanzania"]
+
+    # WHO Syed Laiq Hussain Jafri WHERE London, GB WHAT Visually Impaired CAT Education
+    1.times do |x|
+      who   = whos[rand(5)]
+      where = locations[rand(8)]
+      cat   = categories[rand(6)]
+      what  = impairments[rand(3)]
+      email = SecureRandom.hex(16)
+      phone = rand(10 ** 10) 
+      dob   = (Time.now - (365 * rand(17)).days).strftime("%Y-%m-%d")
+
+      Message.parse "WHO #{who} WHERE #{where} CAT #{cat} WHAT #{what} EMAIL #{email} PHONE #{phone} DOB #{dob}"
+    end
   end
 end
 

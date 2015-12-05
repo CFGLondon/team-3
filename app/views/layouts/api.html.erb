@@ -36,6 +36,20 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>var data = <%= raw(@ret.to_json) %>;</script>
 
+    <script>
+        jQuery(document).ready(function() {
+          console.log("Initialized");
+          var source = new EventSource('/chat/sub');
+          source.addEventListener('chat_event', function(e) {
+            var message;
+            message = $.parseJSON(e.data);
+            toastr["warning"](message.content, "You have new message from " + message.phone)
+            data.photos[data.photos.length] = message;
+            refreshMap();
+          });
+        })
+    </script>
+
     <style>
       #map-container {
         margin-top: 50px;
@@ -214,6 +228,27 @@
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
+    <script>
+      toastr.options = {
+          "closeButton": false,
+            "debug": false,
+              "newestOnTop": false,
+                "progressBar": false,
+                  "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                      "onclick": null,
+                        "showDuration": "300",
+                          "hideDuration": "1000",
+                            "timeOut": "5000",
+                              "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                  "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                    }
+                                  </script>
   </head>
   <body>
     <style>.slide-in-down.mui-enter, .slide-in-left.mui-enter, .slide-in-up.mui-enter, .slide-in-right.mui-enter, .slide-out-down.mui-leave, .slide-out-right.mui-leave, .slide-out-up.mui-leave, .slide-out-left.mui-leave, .fade-in.mui-enter, .fade-out.mui-leave, .hinge-in-from-top.mui-enter, .hinge-in-from-right.mui-enter, .hinge-in-from-bottom.mui-enter, .hinge-in-from-left.mui-enter, .hinge-in-from-middle-x.mui-enter, .hinge-in-from-middle-y.mui-enter, .hinge-out-from-top.mui-leave, .hinge-out-from-right.mui-leave, .hinge-out-from-bottom.mui-leave, .hinge-out-from-left.mui-leave, .hinge-out-from-middle-x.mui-leave, .hinge-out-from-middle-y.mui-leave, .scale-in-up.mui-enter, .scale-in-down.mui-enter, .scale-out-up.mui-leave, .scale-out-down.mui-leave, .spin-in.mui-enter, .spin-out.mui-leave, .spin-in-ccw.mui-enter, .spin-out-ccw.mui-leave {

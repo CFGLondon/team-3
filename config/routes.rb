@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get '/stream', to: 'stream#index'
+  get '/chat/sub', to: 'chat#sub'
+  get '/chat/pub', to: 'chat#sub'
 
   namespace :api do
     resources :messages do
