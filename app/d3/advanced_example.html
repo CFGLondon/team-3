@@ -64,7 +64,7 @@
                 url: "data2.json",
                 dataType: "json",
                 success: function (data) {
-                    alert(data);
+                    title = data["photos"][Math.floor((Math.random() * 10) + 1)]["photo_title"];
                 },
                 error: function(e) {
                     alert("error");
