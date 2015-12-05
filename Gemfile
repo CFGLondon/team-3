@@ -56,6 +56,7 @@ gem 'will_paginate'
 gem 'twitter-bootstrap-rails'
 gem 'puma'
 gem 'redis'
+gem 'jquery-datatables-rails', '~> 3.3.0'
 
 gem 'rails_12factor', group: :production
 ruby "2.2.2"
