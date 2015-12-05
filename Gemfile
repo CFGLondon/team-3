@@ -53,6 +53,7 @@ end
 gem 'countries', :require => 'countries/global'
 gem 'city-state'
 gem 'will_paginate'
+gem 'twitter-bootstrap-rails'
 
 gem 'rails_12factor', group: :production
 ruby "2.2.2"
