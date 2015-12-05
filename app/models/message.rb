@@ -4,28 +4,32 @@ class Message < ActiveRecord::Base
   belongs_to :location
   def self.parse text
     message = text.gsub("\n", " ")
-    if message =~ /WHERE(.+?)(WHAT|WHEN|WHO|CAT|PHONE|EMAIL|$)/
+    if message =~ /WHERE(.+?)(WHAT|WHEN|WHO|CAT|PHONE|EMAIL|DOB|$)/
       location = $1.to_s.strip
     end
 
-    if message =~ /WHAT(.+?)(WHERE|WHEN|WHO|CAT|PHONE|EMAIL|$)/
+    if message =~ /WHAT(.+?)(WHERE|WHEN|WHO|CAT|PHONE|EMAIL|DOB|$)/
       issue = $1.to_s.strip
     end
 
-    if message =~ /WHO(.+?)(WHAT|WHEN|WHERE|CAT|PHONE|EMAIL|$)/
+    if message =~ /WHO(.+?)(WHAT|WHEN|WHERE|CAT|PHONE|EMAIL|DOB|$)/
       name = $1.to_s.strip
     end
 
-    if message =~ /CAT(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|EMAIL|$)/
+    if message =~ /CAT(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|EMAIL|DOB|$)/
       category = $1.to_s.strip
     end
 
-    if message =~ /PHONE(.+?)(WHAT|WHEN|WHERE|WHO|CAT|EMAIL|$)/
+    if message =~ /PHONE(.+?)(WHAT|WHEN|WHERE|WHO|CAT|EMAIL|DOB|$)/
       phone = $1.to_s.strip
     end
 
-    if message =~ /EMAIL(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|CAT|$)/
+    if message =~ /EMAIL(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|CAT|DOB|$)/
       email = $1.to_s.strip
+    end
+
+    if message =~ /DOB(.+?)(WHAT|WHEN|WHERE|WHO|PHONE|CAT|EMAIL|$)/
+      dob = $1.to_s.strip
     end
 
     category = 'Unknown' if category.blank?
@@ -43,6 +47,7 @@ class Message < ActiveRecord::Base
         p.first_name = name.collect(&:strip).join(" ")
       end
     end
+    p.dob = dob
     p.save
 
     l = Location.new
@@ -54,8 +59,8 @@ class Message < ActiveRecord::Base
         ISO3166::Country.find_country_by_alpha2(country)
       if country
         l.country = country.name
-        l.lat     = (country.min_latitude.to_f  + country.max_latitude.to_f)  / 2
-        l.lng     = (country.min_longitude.to_f + country.max_longitude.to_f) / 2
+        l.lat     = (country.min_latitude.to_f  + country.max_latitude.to_f + rand(20))  / 2
+        l.lng     = (country.min_longitude.to_f + country.max_longitude.to_f + rand(20)) / 2
         location.pop
       else
         l.country = location.pop
@@ -74,3 +79,4 @@ class Message < ActiveRecord::Base
     Category.destroy_all
   end
 end
+
