@@ -64,7 +64,7 @@
                 url: "data2.json",
                 dataType: "json",
                 success: function (data) {
-                    alert(data);
+                    title = data["photos"][Math.floor((Math.random() * 10) + 1)]["photo_title"];
                 },
                 error: function(e) {
                     alert("error");
@@ -162,7 +162,8 @@
                     new google.maps.Size(64, 32));
 
 
-            var c = getNameFromJson();
+            var c = "Incident 22";
+//            var c = getNameFromJson();
 //            var c = "dugaa";
             var infowindow = new google.maps.InfoWindow({
                 content: c
@@ -174,7 +175,7 @@
                         data.photos[i].longitude);
                 var marker = new google.maps.Marker({
                     position: latLng,
-                    draggable: true,
+                    draggable: false,
                     title: "yer maw",
                     icon: markerImage,
                     zoom: 15
